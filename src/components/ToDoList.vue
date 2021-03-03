@@ -2,8 +2,9 @@
   <div>
     <ul>
       <todoitem
+        class="qqq"
         v-for="(todo, index) in todos"
-        v-bind:todo="todo"
+        v-bind:todo="{ ...todo, index }"
         :key="index"
         @remove-todo="removeTodo"
         @edit-todo="editTodo"
@@ -25,7 +26,7 @@ export default {
       this.$emit("remove-todo", id);
     },
     editTodo(id) {
-      this.$emit("edit-todo", id);
+      this.$emit("set-current", id);
     },
     openModal() {},
     toggleInput(todo) {
@@ -36,4 +37,8 @@ export default {
 </script>
 
 <style scoped>
+.qqq {
+  margin: 0 auto;
+  width: 80%;
+}
 </style>
