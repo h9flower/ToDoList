@@ -1,16 +1,19 @@
-import VueRouter from "vue-router";
-import Home from "./components/Home";
-import About from "./components/About";
+import Vue from "vue";
+import Router from "vue-router";
+import Home from "@/views/Home";
+import todos from "@/views/todos";
 
-export default new VueRouter({
+Vue.use(Router);
+
+export default new Router({
   routes: [
     {
       path: "",
       component: Home,
     },
     {
-      path: "/ab",
-      component: About,
+      path: "/todolist",
+      component: todos,
     },
   ],
   mode: "history",
