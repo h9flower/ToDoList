@@ -30,6 +30,7 @@
       @set-current="setCurrentTodo"
       @togle-input="toggleInput"
     />
+    <router-view/>
   </div>
 </template>
 
