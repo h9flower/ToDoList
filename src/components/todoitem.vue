@@ -10,8 +10,6 @@
       {{ todo.title }}
     </span>
 
-    <span>тут будет дата</span>
-
     <div class="btns_li">
       <v-btn
         @click="$emit('remove-todo', todo.id)"
@@ -23,8 +21,10 @@
       >
         <v-icon dark> mdi-delete </v-icon>
       </v-btn>
+
       <v-btn
         @click="$emit('edit-todo', todo.id)"
+        :href="`/editTask/${todo.id}`"
         class="mx-2 edit"
         fab
         dark

@@ -2,13 +2,13 @@
   <div>
     <ul>
       <todoitem
-        class="qqq"
+        class="todo"
         v-for="(todo, index) in todos"
         v-bind:todo="{ ...todo, index }"
-        :key="index"
-        @remove-todo="removeTodo"
-        @edit-todo="editTodo"
-        @togle-input="toggleInput"
+        v-bind:key="index"
+        v-on:remove-todo="removeTodo"
+        v-on:edit-todo="editTodo"
+        v-on:togle-input="toggleInput"
       />
     </ul>
   </div>
@@ -17,10 +17,6 @@
 <script>
 import todoitem from "@/components/todoitem";
 export default {
-  props: ["todos"],
-  components: {
-    todoitem,
-  },
   methods: {
     removeTodo(id) {
       this.$emit("remove-todo", id);
@@ -33,11 +29,15 @@ export default {
       this.$emit("togle-input", todo);
     },
   },
+  components: {
+    todoitem,
+  },
+  props: ["todos"],
 };
 </script>
 
 <style scoped>
-.qqq {
+.todo {
   margin: 0 auto;
   width: 80%;
 }

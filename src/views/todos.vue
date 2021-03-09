@@ -11,12 +11,12 @@
       <searchTask v-model="search" />
     </div>
 
-    <modal
-      :current-todo="currentTodo"
+    <!-- <modal
+      v-bind:current-todo="currentTodo"
       v-if="showModal"
-      @hide-modal="showModal = false"
-      @edit-todo="editTodo"
-    />
+      v-on:hide-modal="showModal = false"
+      v-on:edit-todo="editTodo"
+    /> -->
 
     <hr />
     <h3 v-if="!todos.length">Список задач пуст</h3>
@@ -32,29 +32,28 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ToDoList from "@/components/ToDoList";
 import addTodo from "@/components/addTodo";
-import modal from "@/components/modal";
+// import modal from "@/components/modal";
 import searchTask from "@/components/searchTask";
 export default {
   name: "app",
   data() {
     return {
-      todos: [],
       currentTodo: {},
-      showModal: false,
+      // showModal: false,
       selectedTodosIds: [],
       search: "",
     };
   },
+
   mounted() {
-    fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
-      .then((response) => response.json())
-      .then((json) => {
-        this.todos = json;
-      });
+    this.$store.dispatch("fetchTodos");
   },
+
   computed: {
+    ...mapGetters(["todos"]),
     searchTodos() {
       if (this.search) {
         return this.todos
@@ -72,6 +71,7 @@ export default {
       return false;
     },
   },
+
   methods: {
     removeTodo(id) {
       this.todos = this.todos.filter((t) => t.id !== id);
@@ -123,7 +123,7 @@ export default {
   components: {
     ToDoList,
     addTodo,
-    modal,
+    // modal,
     searchTask,
   },
 };
