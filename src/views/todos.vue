@@ -1,13 +1,8 @@
 <template>
   <div class="wrap">
     <div class="container">
-      <addTodo
-        class="addTodo"
-        @add-todo="addTodo"
-        @delete-selected="deleteSelectedIDs"
-        :disableds="disabledBtn"
-      />
-
+      <addTodo class="addTodo" @add-todo="addTodo" :disableds="disabledBtn" />
+      <!-- @delete-selected="deleteSelectedIDs" -->
       <searchTask v-model="search" />
     </div>
 
@@ -54,6 +49,9 @@ export default {
 
   computed: {
     ...mapGetters(["todos"]),
+
+    // set:
+
     searchTodos() {
       if (this.search) {
         return this.todos
@@ -64,6 +62,7 @@ export default {
       }
       return this.todos;
     },
+
     disabledBtn() {
       if (!this.selectedTodosIds.length) {
         return true;
@@ -74,15 +73,19 @@ export default {
 
   methods: {
     removeTodo(id) {
-      this.todos = this.todos.filter((t) => t.id !== id);
+      this.$store.dispatch("removeTodo", id);
+      // this.todos = this.todos.filter((t) => t.id !== id);
     },
+
     addTodo(todo) {
       this.todos.push(todo);
     },
+
     setCurrentTodo(id) {
       this.currentTodo = this.todos.find((todo, i) => todo.id === id);
       this.toggleModalState(true);
     },
+
     editTodo(updatedTodo) {
       this.toggleModalState(false);
 
@@ -93,6 +96,7 @@ export default {
         return todo;
       });
     },
+
     toggleInput({ id, completed }) {
       const findId = this.selectedTodosIds.find(
         (selectedTodoId) => selectedTodoId === id
@@ -111,13 +115,9 @@ export default {
         return todoItem;
       });
     },
+
     toggleModalState(showModal) {
       this.showModal = showModal;
-    },
-    deleteSelectedIDs() {
-      this.todos = this.todos.filter(
-        (todo) => !this.selectedTodosIds.includes(todo.id)
-      );
     },
   },
   components: {

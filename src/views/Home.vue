@@ -2,7 +2,7 @@
   <div>
     <h2>ToDo List</h2>
 
-    <a href="/todolist">Перейти к todo list</a>
+    <a href="/todolist">Нажми чтобы перейти</a>
   </div>
 </template>
 
