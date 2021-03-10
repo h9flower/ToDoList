@@ -6,13 +6,14 @@
         v-bind:checked="todo.completed"
         @change="toggleInput(todo)"
       />
+
       <strong>{{ todo.index + 1 }}</strong>
       {{ todo.title }}
     </span>
 
     <div class="btns_li">
       <v-btn
-        @click="$emit('remove-todo', todo.id)"
+        @click="removeTodo(todo.id)"
         class="mx-2 delete"
         fab
         dark
@@ -46,8 +47,14 @@ export default {
     },
   },
   methods: {
+    removeTodo(todo) {
+      console.log("todoitem", todo);
+      this.$store.dispatch("removeTodo", todo);
+    },
+
     toggleInput(todo) {
-      this.$emit("togle-input", todo);
+      console.log("todoitem");
+      this.$store.dispatch("toggleInput", todo.id, todo.completed);
     },
   },
   // index: Number,

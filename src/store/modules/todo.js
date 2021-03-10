@@ -13,7 +13,12 @@ export default {
     },
 
     removeTodo(store, id) {
+      console.log("todo", id);
       store.commit("removeTodo", id);
+    },
+
+    toggleInput(ctx, id, completed) {
+      ctx.commit("toggleInput", id, completed);
     },
   },
   // похожи на мутации, но вместо того, чтобы мутировать состояние,
@@ -31,6 +36,28 @@ export default {
 
     removeTodo(state, id) {
       state.todos = state.todos.filter((t) => t.id !== id);
+      // console.log("todo", id);
+    },
+
+    toggleInput(state, id, completed) {
+      const findId = state.selectedTodosIds.find(
+        (selectedTodoId) => selectedTodoId === id
+      );
+
+      if (!findId) {
+        state.selectedTodosIds.push(id);
+      } else {
+        state.selectedTodosIds = state.selectedTodosIds.filter(
+          (selectedTodoId) => selectedTodoId !== id
+        );
+      }
+
+      state.todos = state.todos.map((todoItem) => {
+        if (todoItem.id == id) {
+          todoItem.completed = !completed;
+        }
+        return todoItem;
+      });
     },
   },
   // Мутации — единственный способ, которым мы можем обновить наше состояние Vuex.
@@ -41,6 +68,7 @@ export default {
 
   state: {
     todos: [],
+    selectedTodosIds: [],
   },
   // Это один объект, который содержит все данные.
   // Это похоже на ключевое слово data в структуре отдельных компонентов, за исключением того,

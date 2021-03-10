@@ -2,6 +2,7 @@
   <form @submit.prevent="onSubmit">
     <div>
       <input placeholder="Введите задачу" type="text" v-model="title" />
+
       <v-btn
         @click="onSubmit"
         type="submit"
@@ -31,6 +32,7 @@ export default {
       title: "",
     };
   },
+
   methods: {
     onSubmit() {
       if (this.title.trim()) {
@@ -45,10 +47,12 @@ export default {
         this.title = "";
       }
     },
+
     deleteSelectedIDs() {
       this.$emit("delete-selected");
     },
   },
+
   props: {
     todos: Object,
     disableds: Boolean,

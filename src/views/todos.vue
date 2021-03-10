@@ -2,7 +2,6 @@
   <div class="wrap">
     <div class="container">
       <addTodo class="addTodo" @add-todo="addTodo" :disableds="disabledBtn" />
-      <!-- @delete-selected="deleteSelectedIDs" -->
       <searchTask v-model="search" />
     </div>
 
@@ -18,10 +17,9 @@
 
     <ToDoList
       v-bind:todos="searchTodos"
-      @remove-todo="removeTodo"
       @set-current="setCurrentTodo"
-      @togle-input="toggleInput"
     />
+
     <router-view />
   </div>
 </template>
@@ -72,10 +70,6 @@ export default {
   },
 
   methods: {
-    removeTodo(id) {
-      this.$store.dispatch("removeTodo", id);
-      // this.todos = this.todos.filter((t) => t.id !== id);
-    },
 
     addTodo(todo) {
       this.todos.push(todo);
@@ -94,25 +88,6 @@ export default {
           todo = { ...updatedTodo };
         }
         return todo;
-      });
-    },
-
-    toggleInput({ id, completed }) {
-      const findId = this.selectedTodosIds.find(
-        (selectedTodoId) => selectedTodoId === id
-      );
-      if (!findId) {
-        this.selectedTodosIds.push(id);
-      } else {
-        this.selectedTodosIds = this.selectedTodosIds.filter(
-          (selectedTodoId) => selectedTodoId !== id
-        );
-      }
-      this.todos = this.todos.map((todoItem) => {
-        if (todoItem.id == id) {
-          todoItem.completed = !completed;
-        }
-        return todoItem;
       });
     },
 

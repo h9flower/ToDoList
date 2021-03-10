@@ -13,6 +13,7 @@
           v-model="name"
           hide-details="auto"
         ></v-text-field>
+
         <v-btn @click="editTask" class="mx-2 edit" fab dark large color="cyan">
           <v-icon dark> mdi-pencil </v-icon>
         </v-btn>
