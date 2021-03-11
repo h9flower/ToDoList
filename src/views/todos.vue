@@ -1,7 +1,9 @@
 <template>
   <div class="wrap">
     <div class="container">
-      <addTodo class="addTodo" @add-todo="addTodo" :disableds="disabledBtn" />
+      <addTodo class="addTodo" />
+      <!-- @add-todo="addTodo" -->
+
       <searchTask v-model="search" />
     </div>
 
@@ -15,10 +17,7 @@
     <hr />
     <h3 v-if="!todos.length">Список задач пуст</h3>
 
-    <ToDoList
-      v-bind:todos="searchTodos"
-      @set-current="setCurrentTodo"
-    />
+    <ToDoList v-bind:todos="searchTodos" @set-current="setCurrentTodo" />
 
     <router-view />
   </div>
@@ -35,8 +34,6 @@ export default {
   data() {
     return {
       currentTodo: {},
-      // showModal: false,
-      selectedTodosIds: [],
       search: "",
     };
   },
@@ -58,21 +55,9 @@ export default {
       }
       return this.todos;
     },
-
-    disabledBtn() {
-      if (!this.selectedTodosIds.length) {
-        return true;
-      }
-      return false;
-    },
   },
 
   methods: {
-
-    addTodo(todo) {
-      this.todos.push(todo);
-    },
-
     setCurrentTodo(id) {
       this.currentTodo = this.todos.find((todo, i) => todo.id === id);
       this.toggleModalState(true);

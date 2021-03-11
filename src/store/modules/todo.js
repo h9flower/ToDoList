@@ -20,8 +20,8 @@ export default {
       store.commit("toggleInput", id, completed);
     },
 
-    getItem(store, id) {
-      store.commit("getItem", id);
+    takeItem(store, id) {
+      store.commit("setItem", id);
     },
   },
   // похожи на мутации, но вместо того, чтобы мутировать состояние,
@@ -42,10 +42,11 @@ export default {
       state.todos = state.todos.filter((t) => t.id !== id);
     },
 
-    toggleInput(state, id, completed) {
+    toggleInput(state, id) {
       const findId = state.selectedTodosIds.find(
         (selectedTodoId) => selectedTodoId === id
       );
+
       if (!findId) {
         state.selectedTodosIds.push(id);
       } else {
@@ -53,15 +54,16 @@ export default {
           (selectedTodoId) => selectedTodoId !== id
         );
       }
+
       state.todos = state.todos.map((todoItem) => {
         if (todoItem.id == id) {
-          todoItem.completed = !completed;
+          todoItem.completed = !todoItem.completed;
         }
         return todoItem;
       });
     },
 
-    getItem(state, id) {
+    setSelectedTodo(state, id) {
       state.selectedTodo = state.todos.find((todo) => todo.id == id);
     },
 
@@ -72,6 +74,17 @@ export default {
         }
         return todo;
       });
+    },
+
+    deleteSelectedTask(state) {
+      state.todos = state.todos.filter(
+        (todo) => !state.selectedTodosIds.includes(todo.id)
+      );
+    },
+
+    addTask(state, todo) {
+      console.log("asd");
+      state.todos.push(todo);
     },
   },
   // Мутации — единственный способ, которым мы можем обновить наше состояние Vuex.
@@ -101,7 +114,7 @@ export default {
       return state.todos;
     },
 
-    getTodo: (state) => {
+    selectTodo: (state) => {
       return state.selectedTodo;
     },
   },

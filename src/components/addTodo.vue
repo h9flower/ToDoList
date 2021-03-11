@@ -1,10 +1,10 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit.prevent="addTask">
     <div>
       <input placeholder="Введите задачу" type="text" v-model="title" />
 
       <v-btn
-        @click="onSubmit"
+        :disabled="title.length === 0"
         type="submit"
         class="mx-2"
         fab
@@ -16,9 +16,9 @@
     </div>
 
     <v-btn
-      :disabled="disableds"
-      class="delete_high"
-      @click="deleteSelectedIDs"
+      :disabled="$store.state.todo.selectedTodosIds.length === 0"
+      class="deleteSelected"
+      @click="deleteSelectedTask"
       elevation="2"
       >Удалить выделенное</v-btn
     >
@@ -34,28 +34,19 @@ export default {
   },
 
   methods: {
-    onSubmit() {
-      if (this.title.trim()) {
-        const newTodo = {
-          id: Date.now(),
-          title: this.title,
-          completed: false,
-          // createdAt:
-        };
-
-        this.$emit("add-todo", newTodo);
-        this.title = "";
-      }
+    addTask() {
+      const newObject = { id: Date.now(), title: this.title, completed: false };
+      this.$store.commit("addTask", newObject);
+      console.log(this.$store.state);
     },
 
-    deleteSelectedIDs() {
-      this.$emit("delete-selected");
+    deleteSelectedTask() {
+      this.$store.commit("deleteSelectedTask");
     },
   },
 
   props: {
     todos: Object,
-    disableds: Boolean,
   },
 };
 </script>
@@ -77,7 +68,7 @@ input {
 .v-btn:not(.v-btn--round).v-size--default {
   width: 50%;
 }
-.delete_high {
+.deleteSelected {
   margin-top: 20px;
 }
 </style>

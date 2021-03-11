@@ -41,7 +41,7 @@ export default {
   methods: {
     routerEdit() {
       this.$router.push({ path: `/editTask/${this.todo.id}` });
-      this.$store.dispatch("getItem", this.todo.id);
+      this.$store.dispatch("takeItem", this.todo.id);
     },
 
     removeTodo(todo) {
@@ -49,10 +49,9 @@ export default {
     },
 
     toggleInput(todo) {
-      this.$store.dispatch("toggleInput", todo.id, todo.completed);
+      this.$store.dispatch("toggleInput", todo.id);
     },
   },
-  // index: Number,
 };
 </script>
 

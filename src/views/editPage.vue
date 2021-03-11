@@ -2,7 +2,7 @@
   <div class="modal_wrap">
     <div class="modal">
       <v-btn
-        @click="comeTodo"
+        @click="moveBack"
         class="mx-2 close"
         fab
         dark
@@ -38,15 +38,15 @@ export default {
   },
 
   created() {
-    this.todoTitle = this.$store.getters.getTodo.title;
+    this.todoTitle = this.$store.getters.selectTodo.title;
   },
 
   methods: {
     editTask() {
       this.$store.commit("updateTitleTodos", this.todoTitle);
     },
-    comeTodo() {
-      this.$router.push({ path: "/todolist" });
+    moveBack() {
+      this.$router.go({ path: "/todolist" });
     },
   },
 
