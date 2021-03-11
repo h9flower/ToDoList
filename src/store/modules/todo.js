@@ -2,15 +2,15 @@ import { _ } from "core-js";
 
 export default {
   actions: {
-    async fetchTodos(store) {
-      fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
-        .then((body) => {
-          return body.json();
-        })
-        .then((todos) => {
-          store.commit("updateTodos", todos);
-        });
-    },
+    // async fetchTodos(store) {
+    //   fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
+    //     .then((body) => {
+    //       return body.json();
+    //     })
+    //     .then((todos) => {
+    //       store.commit("updateTodos", todos);
+    //     });
+    // },
 
     removeTodo(store, id) {
       store.commit("removeTodo", id);
@@ -64,6 +64,15 @@ export default {
     getItem(state, id) {
       state.selectedTodo = state.todos.find((todo) => todo.id == id);
     },
+
+    updateTitleTodos(state, title) {
+      state.todos = state.todos.map((todo) => {
+        if (todo.id == state.selectedTodo.id) {
+          todo.title = title;
+        }
+        return todo;
+      });
+    },
   },
   // Мутации — единственный способ, которым мы можем обновить наше состояние Vuex.
   // Они выполняют одну и только одну задачу: установить состояние.
@@ -72,7 +81,11 @@ export default {
   // отвечают за установление нового состояния (state,[payload])
 
   state: {
-    todos: [],
+    todos: [
+      { id: 1, title: "delectus aut autem", completed: false },
+      { id: 2, title: "quis ut nam facilis et officia qui", completed: false },
+      { id: 3, title: "fugiat veniam minus", completed: false },
+    ],
     selectedTodosIds: [],
     selectedTodo: {},
   },

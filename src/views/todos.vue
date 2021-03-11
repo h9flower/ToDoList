@@ -42,7 +42,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("fetchTodos");
+    // this.$store.dispatch("fetchTodos");
   },
 
   computed: {

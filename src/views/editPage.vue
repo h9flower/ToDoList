@@ -1,7 +1,14 @@
 <template>
   <div class="modal_wrap">
     <div class="modal">
-      <v-btn href="/todolist" class="mx-2 close" fab dark small color="primary">
+      <v-btn
+        @click="comeTodo"
+        class="mx-2 close"
+        fab
+        dark
+        small
+        color="primary"
+      >
         <v-icon dark> mdi-close </v-icon>
       </v-btn>
 
@@ -36,7 +43,10 @@ export default {
 
   methods: {
     editTask() {
-      console.log("editTask editPage");
+      this.$store.commit("updateTitleTodos", this.todoTitle);
+    },
+    comeTodo() {
+      this.$router.push({ path: "/todolist" });
     },
   },
 
