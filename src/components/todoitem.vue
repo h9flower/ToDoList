@@ -23,15 +23,7 @@
         <v-icon dark> mdi-delete </v-icon>
       </v-btn>
 
-      <v-btn
-        @click="$emit('edit-todo', todo.id)"
-        :href="`/editTask/${todo.id}`"
-        class="mx-2 edit"
-        fab
-        dark
-        large
-        color="cyan"
-      >
+      <v-btn @click="routerEdit" class="mx-2 edit" fab dark large color="cyan">
         <v-icon dark> mdi-pencil </v-icon>
       </v-btn>
     </div>
@@ -47,13 +39,16 @@ export default {
     },
   },
   methods: {
+    routerEdit() {
+      this.$router.push({ path: `/editTask/${this.todo.id}` });
+      this.$store.dispatch("getItem", this.todo.id);
+    },
+
     removeTodo(todo) {
-      console.log("todoitem", todo);
       this.$store.dispatch("removeTodo", todo);
     },
 
     toggleInput(todo) {
-      console.log("todoitem");
       this.$store.dispatch("toggleInput", todo.id, todo.completed);
     },
   },

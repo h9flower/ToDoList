@@ -10,7 +10,7 @@
       <div class="container_edit">
         <v-text-field
           class="textarea"
-          v-model="name"
+          v-model="todoTitle"
           hide-details="auto"
         ></v-text-field>
 
@@ -26,21 +26,20 @@
 export default {
   data() {
     return {
-      name: "",
+      todoTitle: "",
     };
   },
+
   created() {
-    // this.name = ;
+    this.todoTitle = this.$store.getters.getTodo.title;
   },
+
   methods: {
     editTask() {
-      const todo = {
-        ...this.currentTodo,
-        title: this.name,
-      };
-      this.$emit("edit-todo", todo);
+      console.log("editTask editPage");
     },
   },
+
   props: {
     currentTodo: {
       type: Object,
@@ -72,6 +71,3 @@ export default {
   margin: 0 auto;
 }
 </style>
-
-    // console.log(this.$route.params);
-    // this.$route.params[`1`];

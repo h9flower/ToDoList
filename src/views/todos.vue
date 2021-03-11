@@ -48,8 +48,6 @@ export default {
   computed: {
     ...mapGetters(["todos"]),
 
-    // set:
-
     searchTodos() {
       if (this.search) {
         return this.todos

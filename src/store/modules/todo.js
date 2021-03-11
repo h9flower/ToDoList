@@ -2,23 +2,26 @@ import { _ } from "core-js";
 
 export default {
   actions: {
-    async fetchTodos(ctx) {
+    async fetchTodos(store) {
       fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
         .then((body) => {
           return body.json();
         })
         .then((todos) => {
-          ctx.commit("updateTodos", todos);
+          store.commit("updateTodos", todos);
         });
     },
 
     removeTodo(store, id) {
-      console.log("todo", id);
       store.commit("removeTodo", id);
     },
 
-    toggleInput(ctx, id, completed) {
-      ctx.commit("toggleInput", id, completed);
+    toggleInput(store, id, completed) {
+      store.commit("toggleInput", id, completed);
+    },
+
+    getItem(store, id) {
+      store.commit("getItem", id);
     },
   },
   // похожи на мутации, но вместо того, чтобы мутировать состояние,
@@ -27,7 +30,8 @@ export default {
   // когда эти задачи выполнены, нам нужно фиксировать (commit) мутацию, которая, в свою очередь, обновляет состояние.
 
   // асинхронны похоже на mutations, когда выполнилось нужно зафиксировать через commit которая обновляет состояние state
-  //делакт запрос на бекенд
+
+  //делает запрос на бекенд
 
   mutations: {
     updateTodos(state, todos) {
@@ -36,14 +40,12 @@ export default {
 
     removeTodo(state, id) {
       state.todos = state.todos.filter((t) => t.id !== id);
-      // console.log("todo", id);
     },
 
     toggleInput(state, id, completed) {
       const findId = state.selectedTodosIds.find(
         (selectedTodoId) => selectedTodoId === id
       );
-
       if (!findId) {
         state.selectedTodosIds.push(id);
       } else {
@@ -51,13 +53,16 @@ export default {
           (selectedTodoId) => selectedTodoId !== id
         );
       }
-
       state.todos = state.todos.map((todoItem) => {
         if (todoItem.id == id) {
           todoItem.completed = !completed;
         }
         return todoItem;
       });
+    },
+
+    getItem(state, id) {
+      state.selectedTodo = state.todos.find((todo) => todo.id == id);
     },
   },
   // Мутации — единственный способ, которым мы можем обновить наше состояние Vuex.
@@ -69,6 +74,7 @@ export default {
   state: {
     todos: [],
     selectedTodosIds: [],
+    selectedTodo: {},
   },
   // Это один объект, который содержит все данные.
   // Это похоже на ключевое слово data в структуре отдельных компонентов, за исключением того,
@@ -80,6 +86,10 @@ export default {
   getters: {
     todos: (state) => {
       return state.todos;
+    },
+
+    getTodo: (state) => {
+      return state.selectedTodo;
     },
   },
 };
