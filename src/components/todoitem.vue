@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li class="containerTask">
     <span v-bind:class="{ done: todo.completed }">
       <input
         type="checkbox"
@@ -9,6 +9,7 @@
 
       <strong>{{ todo.index + 1 }}</strong>
       {{ todo.title }}
+      <li class="subtitle">{{ todo.subtitle }}</li>
     </span>
 
     <div class="btns_li">
@@ -52,6 +53,12 @@ export default {
       this.$store.dispatch("toggleInput", todo.id);
     },
   },
+
+  computed: {
+    getSubTask() {
+      this.$store.getters.getSubTask(this.item.id);
+    },
+  },
 };
 </script>
 
@@ -89,5 +96,18 @@ li {
 }
 input {
   margin-right: 1rem;
+}
+.containerTask {
+  padding: 20px;
+  position: relative;
+}
+.subtitle {
+  border: 0;
+  position: absolute;
+  bottom: 9px;
+  left: 67px;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
 }
 </style>

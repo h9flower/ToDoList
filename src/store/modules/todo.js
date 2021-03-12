@@ -21,7 +21,7 @@ export default {
     },
 
     takeItem(store, id) {
-      store.commit("setItem", id);
+      store.commit("setSelectedTodo", id);
     },
   },
   // похожи на мутации, но вместо того, чтобы мутировать состояние,
@@ -67,10 +67,11 @@ export default {
       state.selectedTodo = state.todos.find((todo) => todo.id == id);
     },
 
-    updateTitleTodos(state, title) {
+    updateTitleTodos(state, payload) {
       state.todos = state.todos.map((todo) => {
         if (todo.id == state.selectedTodo.id) {
-          todo.title = title;
+          todo.title = payload.todoTitle;
+          todo.subtitle = payload.todoSubTitle;
         }
         return todo;
       });
@@ -83,7 +84,6 @@ export default {
     },
 
     addTask(state, todo) {
-      console.log("asd");
       state.todos.push(todo);
     },
   },
@@ -95,9 +95,19 @@ export default {
 
   state: {
     todos: [
-      { id: 1, title: "delectus aut autem", completed: false },
-      { id: 2, title: "quis ut nam facilis et officia qui", completed: false },
-      { id: 3, title: "fugiat veniam minus", completed: false },
+      { id: 1, title: "delectus aut autem", subtitle: "", completed: false },
+      {
+        id: 2,
+        title: "quis ut nam facilis et officia qui",
+        subtitle: "",
+        completed: false,
+      },
+      {
+        id: 3,
+        title: "fugiat veniam minus",
+        subtitle: "",
+        completed: false,
+      },
     ],
     selectedTodosIds: [],
     selectedTodo: {},
@@ -116,6 +126,10 @@ export default {
 
     selectTodo: (state) => {
       return state.selectedTodo;
+    },
+
+    getState: (state) => (id) => {
+      return state.subTask.find((el) => el.id == id);
     },
   },
 };

@@ -16,8 +16,16 @@
 
       <div class="container_edit">
         <v-text-field
+          placeholder="Добавить задачу"
           class="textarea"
           v-model="todoTitle"
+          hide-details="auto"
+        ></v-text-field>
+
+        <v-text-field
+          placeholder="Добавить подзадачу"
+          class="textarea"
+          v-model="todoSubTitle"
           hide-details="auto"
         ></v-text-field>
 
@@ -34,19 +42,24 @@ export default {
   data() {
     return {
       todoTitle: "",
+      todoSubTitle: "",
     };
   },
 
   created() {
     this.todoTitle = this.$store.getters.selectTodo.title;
+    this.todoSubTitle = this.$store.getters.selectTodo.subtitle;
   },
 
   methods: {
     editTask() {
-      this.$store.commit("updateTitleTodos", this.todoTitle);
+      this.$store.commit("updateTitleTodos", {
+        todoTitle: this.todoTitle,
+        todoSubTitle: this.todoSubTitle,
+      });
     },
     moveBack() {
-      this.$router.go({ path: "/todolist" });
+      this.$router.go(-1);
     },
   },
 
