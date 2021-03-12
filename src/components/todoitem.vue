@@ -9,9 +9,22 @@
 
       <strong>{{ todo.index + 1 }}</strong>
       {{ todo.title }}
-      <li class="subtitle">{{ todo.subtitle }}</li>
-    </span>
 
+      <li class="subtask">
+        <ul>
+          <li v-for="todo in todo.subtodos" :key="todo.title">
+            <input
+              @change="toggleSubtask(todo)"
+              type="checkbox"
+              v-bind:checked="todo.completed"
+            /><strong>{{ todo.id }}</strong>
+            {{ todo.title }}
+          </li>
+        </ul>
+      </li>
+
+      <li class="description">Описание : {{ todo.description }}</li>
+    </span>
     <div class="btns_li">
       <v-btn
         @click="removeTodo(todo.id)"
@@ -52,6 +65,10 @@ export default {
     toggleInput(todo) {
       this.$store.dispatch("toggleInput", todo.id);
     },
+
+    toggleSubtask() {
+      this.$store.dispatch("toggleSubtask");
+    },
   },
 
   computed: {
@@ -64,6 +81,10 @@ export default {
 
 <style scoped>
 li {
+  list-style-type: none;
+}
+
+.containerTask {
   align-items: center;
   border: 1px solid #ccc;
   display: flex;
@@ -101,13 +122,15 @@ input {
   padding: 20px;
   position: relative;
 }
-.subtitle {
-  border: 0;
+.description {
   position: absolute;
   bottom: 9px;
   left: 67px;
   font-size: 14px;
   padding: 0;
   margin: 0;
+}
+.subtask {
+  margin: 10px 0;
 }
 </style>

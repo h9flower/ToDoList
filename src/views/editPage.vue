@@ -23,9 +23,9 @@
         ></v-text-field>
 
         <v-text-field
-          placeholder="Добавить подзадачу"
+          placeholder="Добавить описание задачи"
           class="textarea"
-          v-model="todoSubTitle"
+          v-model="todoDescription"
           hide-details="auto"
         ></v-text-field>
 
@@ -42,21 +42,22 @@ export default {
   data() {
     return {
       todoTitle: "",
-      todoSubTitle: "",
+      todoDescription: "",
     };
   },
 
   created() {
     this.todoTitle = this.$store.getters.selectTodo.title;
-    this.todoSubTitle = this.$store.getters.selectTodo.subtitle;
+    this.todoDescription = this.$store.getters.selectTodo.description;
   },
 
   methods: {
     editTask() {
       this.$store.commit("updateTitleTodos", {
         todoTitle: this.todoTitle,
-        todoSubTitle: this.todoSubTitle,
+        todoDescription: this.todoDescription,
       });
+      this.$router.go(-1);
     },
     moveBack() {
       this.$router.go(-1);

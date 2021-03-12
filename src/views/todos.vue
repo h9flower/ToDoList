@@ -1,23 +1,17 @@
 <template>
   <div class="wrap">
     <div class="container">
+      <deleteAll />
       <addTodo class="addTodo" />
       <!-- @add-todo="addTodo" -->
 
-      <searchTask v-model="search" />
+      <!-- <searchTask v-model="search" /> -->
     </div>
-
-    <!-- <modal
-      v-bind:current-todo="currentTodo"
-      v-if="showModal"
-      v-on:hide-modal="showModal = false"
-      v-on:edit-todo="editTodo"
-    /> -->
 
     <hr />
     <h3 v-if="!todos.length">Список задач пуст</h3>
 
-    <ToDoList v-bind:todos="searchTodos" @set-current="setCurrentTodo" />
+    <ToDoList v-bind:todos="searchTodos" v-on:set-current="setCurrentTodo" />
 
     <router-view />
   </div>
@@ -25,6 +19,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import deleteAll from "@/components/deleteall";
 import ToDoList from "@/components/ToDoList";
 import addTodo from "@/components/addTodo";
 // import modal from "@/components/modal";
@@ -83,6 +78,7 @@ export default {
     addTodo,
     // modal,
     searchTask,
+    deleteAll,
   },
 };
 </script>

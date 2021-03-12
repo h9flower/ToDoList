@@ -63,6 +63,10 @@ export default {
       });
     },
 
+    toggleSubtask() {
+      console.log("sdf");
+    },
+
     setSelectedTodo(state, id) {
       state.selectedTodo = state.todos.find((todo) => todo.id == id);
     },
@@ -71,7 +75,7 @@ export default {
       state.todos = state.todos.map((todo) => {
         if (todo.id == state.selectedTodo.id) {
           todo.title = payload.todoTitle;
-          todo.subtitle = payload.todoSubTitle;
+          todo.description = payload.todoDescription;
         }
         return todo;
       });
@@ -86,6 +90,17 @@ export default {
     addTask(state, todo) {
       state.todos.push(todo);
     },
+
+    pushArr(state, payload) {
+      state.todos.find((todo) => {
+        todo.id === id;
+      });
+      console.log("pushArr", todo);
+    },
+
+    deleteAll(state) {
+      state.todos = [];
+    },
   },
   // Мутации — единственный способ, которым мы можем обновить наше состояние Vuex.
   // Они выполняют одну и только одну задачу: установить состояние.
@@ -95,17 +110,14 @@ export default {
 
   state: {
     todos: [
-      { id: 1, title: "delectus aut autem", subtitle: "", completed: false },
       {
-        id: 2,
-        title: "quis ut nam facilis et officia qui",
-        subtitle: "",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "fugiat veniam minus",
-        subtitle: "",
+        id: 1,
+        title: "Task1",
+        description: "",
+        subtodos: [
+          { id: 1, title: "sub1" },
+          { id: 2, title: "sub2" },
+        ],
         completed: false,
       },
     ],
