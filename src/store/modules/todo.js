@@ -63,10 +63,6 @@ export default {
       });
     },
 
-    toggleSubtask() {
-      console.log("sdf");
-    },
-
     setSelectedTodo(state, id) {
       state.selectedTodo = state.todos.find((todo) => todo.id == id);
     },
@@ -91,13 +87,6 @@ export default {
       state.todos.push(todo);
     },
 
-    pushArr(state, payload) {
-      state.todos.find((todo) => {
-        todo.id === id;
-      });
-      console.log("pushArr", todo);
-    },
-
     deleteAll(state) {
       state.todos = [];
     },
@@ -109,18 +98,7 @@ export default {
   // отвечают за установление нового состояния (state,[payload])
 
   state: {
-    todos: [
-      {
-        id: 1,
-        title: "Task1",
-        description: "",
-        subtodos: [
-          { id: 1, title: "sub1" },
-          { id: 2, title: "sub2" },
-        ],
-        completed: false,
-      },
-    ],
+    todos: [],
     selectedTodosIds: [],
     selectedTodo: {},
   },

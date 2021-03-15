@@ -6,7 +6,7 @@
           class="task_input"
           placeholder="Введите задачу"
           type="text"
-          v-model="title"
+          v-model="newObject.title"
         />
         <!---------------------------------- -->
         <div class="modal_wrap" v-if="showModal" @close="showModal = false">
@@ -32,7 +32,7 @@
               ></v-text-field>
 
               <v-btn
-                @click="addTitleSubtask"
+                @click="addSubtask"
                 class="mx-2 edit"
                 fab
                 dark
@@ -47,15 +47,15 @@
         <!---------------------------------- -->
 
         <input
-          :disabled="title.length === 0"
+          :disabled="newObject.title.length === 0"
           class="subtask_input"
           placeholder="Введите описание"
           type="text"
-          v-model="description"
+          v-model="newObject.description"
         />
 
         <v-btn
-          :disabled="title.length === 0"
+          :disabled="newObject.title.length === 0"
           class="callModalAddSubtask"
           @click="showModal = true"
           elevation="2"
@@ -63,7 +63,7 @@
         >
       </div>
       <v-btn
-        :disabled="title.length === 0"
+        :disabled="newObject.title.length === 0"
         type="submit"
         class="mx-2"
         fab
@@ -88,41 +88,42 @@
 export default {
   data() {
     return {
-      title: "",
-      description: "",
       showModal: false,
+
+      newObject: {
+        id: Date.now(),
+        title: "",
+        description: "",
+        subtodos: [],
+      },
+
       titleSubtask: "",
     };
   },
 
   methods: {
     addTask() {
-      const newObject = {
-        id: Date.now(),
-        title: this.title,
-        subtodos: [{ id: Date.now(), title: this.subtodo }],
-        description: this.description,
-        completed: false,
-      };
-      this.$store.commit("addTask", newObject);
-      this.title = "";
-      this.subtodo = "";
-      this.description = "";
+      const MainNewObject = this.newObject;
+      const CopyNewObject = Object.assign({}, MainNewObject);
 
-      // if()
+      this.$store.commit("addTask", CopyNewObject);
+
+      this.newObject.title = "";
+      this.newObject.description = "";
+      this.titleSubtask = "";
+      this.newObject.subtodos = [];
     },
 
     deleteSelectedTask() {
       this.$store.commit("deleteSelectedTask");
     },
 
-    addTitleSubtask() {
-      console.log("addTitleSubtask", this.titleSubtask);
-      const newArr = { id: Date.now(), title: this.titleSubtask };
-      this.$store.commit("pushArr", {
-        newArr,
-        title: this.titleSubtask,
-      });
+    addSubtask() {
+      const newSubObj = { id: Date.now(), title: this.titleSubtask };
+      this.newObject.subtodos.push(newSubObj);
+
+      console.log(this.newObject);
+      this.titleSubtask = "";
     },
   },
 
