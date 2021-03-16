@@ -12,9 +12,9 @@
 
       <li class="subtask">
         <ul>
-          <li v-for="todo in todo.subtodos" :key="todo.title">
+          <li v-for="(todo, idx) in todo.subtodos" :key="todo.title">
             <input type="checkbox" v-bind:checked="todo.completed" />
-            <strong>{{ todo.id }}</strong>
+            <strong>{{ idx + 1 }}</strong>
             {{ todo.title }}
           </li>
         </ul>

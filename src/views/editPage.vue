@@ -15,19 +15,25 @@
       <h2>Редактирование задачи</h2>
 
       <div class="container_edit">
-        <v-text-field
-          placeholder="Добавить задачу"
-          class="textarea"
-          v-model="todoTitle"
-          hide-details="auto"
-        ></v-text-field>
+        <div class="edit_wrap">
+          <p>редактирование задачи</p>
+          <v-text-field
+            placeholder="Редактировать задачу"
+            class="textarea"
+            v-model="todoTitle"
+            hide-details="auto"
+          ></v-text-field>
+        </div>
 
-        <v-text-field
-          placeholder="Добавить описание задачи"
-          class="textarea"
-          v-model="todoDescription"
-          hide-details="auto"
-        ></v-text-field>
+        <div class="edit_wrap">
+          <p>редактирование описания</p>
+          <v-text-field
+            placeholder="Добавить описание задачи"
+            class="textarea"
+            v-model="todoDescription"
+            hide-details="auto"
+          ></v-text-field>
+        </div>
 
         <v-btn @click="editTask" class="mx-2 edit" fab dark large color="cyan">
           <v-icon dark> mdi-pencil </v-icon>
@@ -43,6 +49,7 @@ export default {
     return {
       todoTitle: "",
       todoDescription: "",
+      todoSubtask: "",
     };
   },
 
@@ -59,6 +66,7 @@ export default {
       });
       this.$router.go(-1);
     },
+
     moveBack() {
       this.$router.go(-1);
     },
@@ -73,6 +81,14 @@ export default {
 </script>
 
 <style scoped>
+.edit_wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  margin: 10px;
+  padding: 10px;
+}
 .close {
   top: 10px;
   right: 30px;
@@ -93,5 +109,14 @@ export default {
   padding: 100px;
   width: 50%;
   margin: 0 auto;
+}
+.textarea {
+  width: 40%;
+  margin-bottom: 10px;
+}
+p {
+  margin-right: 10px;
+  width: 40%;
+  margin: 10px 0;
 }
 </style>

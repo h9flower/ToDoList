@@ -1,7 +1,9 @@
 <template>
   <div class="wrap">
     <div class="container">
+
       <deleteAll />
+      
       <addTodo class="addTodo" />
       <!-- @add-todo="addTodo" -->
 

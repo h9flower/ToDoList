@@ -54,6 +54,10 @@
           v-model="newObject.description"
         />
 
+        <strong class="subtask_counter"
+          >Подзадач добавлено : {{ counter }}</strong
+        >
+
         <v-btn
           :disabled="newObject.title.length === 0"
           class="callModalAddSubtask"
@@ -62,6 +66,7 @@
           >Добавить подзадачу</v-btn
         >
       </div>
+
       <v-btn
         :disabled="newObject.title.length === 0"
         type="submit"
@@ -89,6 +94,7 @@ export default {
   data() {
     return {
       showModal: false,
+      counter: 0,
 
       newObject: {
         id: Date.now(),
@@ -112,6 +118,8 @@ export default {
       this.newObject.description = "";
       this.titleSubtask = "";
       this.newObject.subtodos = [];
+
+      this.counter = 0;
     },
 
     deleteSelectedTask() {
@@ -122,8 +130,11 @@ export default {
       const newSubObj = { id: Date.now(), title: this.titleSubtask };
       this.newObject.subtodos.push(newSubObj);
 
-      console.log(this.newObject);
       this.titleSubtask = "";
+
+      this.showModal = false;
+
+      this.counter += 1;
     },
   },
 
@@ -134,6 +145,9 @@ export default {
 </script>
 
 <style scoped>
+.subtask_counter {
+  padding: 20px;
+}
 input {
   margin-right: 10px;
   border: 1px solid #000;
